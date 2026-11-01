@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datenschutzerklärung</title>
+<style>
+  :root { --bg: #ffffff; --fg: #222222; --muted: #666666; --accent: #008080; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #161616; --fg: #e6e6e6; --muted: #a0a0a0; --accent: #4fc3c3; } }
+  body { background: var(--bg); color: var(--fg); font: 16px/1.6 system-ui, sans-serif; margin: 0; padding: 32px 16px; }
+  main { max-width: 680px; margin: 0 auto; }
+  h1 { color: var(--accent); margin-top: 0; }
+  a { color: var(--accent); }
+  footer { color: var(--muted); font-size: 14px; margin-top: 40px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Datenschutzerklärung – Trasporto Sheet</h1>
+  <p>Stand: 01.11.2026</p>
+
+  <h2>Worum es geht</h2>
+  <p>Das Trasporto Sheet ist ein internes Google Sheet mit gebundenem Apps Script der Roleplay-Firma Trasporto Commercio
+     (FiveM-Server). Es wird nur von freigegebenen Mitarbeitern genutzt. Siehe <a href="./">Startseite</a>.</p>
+
+  <h2>Welche Berechtigungen das Script hat</h2>
+  <ul>
+    <li><strong>Nur das geöffnete Sheet</strong> (<code>spreadsheets.currentonly</code>): Das Script liest und schreibt ausschließlich
+        in diesem einen Sheet. Es hat keinen Zugriff auf andere Dateien, Google Drive, Gmail oder Kontakte.</li>
+    <li><strong>Externe Verbindungen</strong> (<code>script.external_request</code>): Das Script sendet Meldungen an Discord-Webhooks
+        der Firma (z. B. Preislisten, Sanktionen, Meldungen innerhalb des Rollenspiels) und lädt Bilder, die im Sheet hinterlegt sind,
+        zur Anzeige.</li>
+  </ul>
+
+  <h2>Welche Daten verarbeitet werden</h2>
+  <p>Im Sheet stehen Daten des Rollenspiels: Namen der Spielfiguren, Bestellungen, Lagerbestände, Ränge sowie Discord-IDs zur
+     Rollenvergabe. Für den Zellschutz verwendet das Script die Google-E-Mail-Adresse des angemeldeten Mitarbeiters, um seinen Rang
+     zu prüfen. Diese Adresse wird nur im Sheet bzw. in den Script-Eigenschaften gespeichert.</p>
+
+  <h2>Weitergabe</h2>
+  <p>Es gibt keine Weitergabe an Dritte, keine Werbung, kein Tracking und keinen Verkauf von Daten. Daten verlassen das Sheet nur als
+     Discord-Nachricht in die Channels der Firma, wie oben beschrieben.</p>
+
+  <h2>Speicherdauer und Löschung</h2>
+  <p>Die Daten bleiben im Sheet, solange die Firma es nutzt. Wer als Mitarbeiter ausscheidet, verliert den Zugang zum Sheet.
+     Eine Löschung eigener Daten kann bei der Leitung angefragt werden.</p>
+
+  <footer>Kontakt: über den Discord-Server von Trasporto Commercio.</footer>
+</main>
+</body>
+</html>
