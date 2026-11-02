@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Produktions-Rechner</title>
+<style>
+  :root { --bg: #ffffff; --fg: #222222; --muted: #666666; --accent: #008080; --line: #dddddd; --card: #f5f8f8; --warn: #a15c00; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #161616; --fg: #e6e6e6; --muted: #a0a0a0; --accent: #4fc3c3; --line: #333333; --card: #1f2424; --warn: #e0a050; } }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, sans-serif; margin: 0; padding: 32px 16px; }
+  main { max-width: 860px; margin: 0 auto; }
+  h1 { color: var(--accent); margin-top: 0; }
+  h2 { margin: 32px 0 8px; font-size: 20px; }
+  a { color: var(--accent); }
+  footer { color: var(--muted); font-size: 14px; margin-top: 40px; }
+  .muted { color: var(--muted); font-size: 14px; }
+  .reihe { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  input, select, button { font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; }
+  input[type=number] { width: 90px; }
+  #produkt { flex: 1 1 220px; min-width: 0; }
+  button { cursor: pointer; }
+  button.haupt { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+  button.klein { padding: 2px 8px; }
+  label.schalter { display: flex; gap: 6px; align-items: center; cursor: pointer; }
+  .karte { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; }
+  .auswahl { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 6px; }
+  .auswahl li { display: flex; gap: 8px; align-items: center; }
+  .auswahl li span { flex: 1; }
+  .tabelle { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 13px; color: var(--muted); font-weight: 600; }
+  td.zahl, th.zahl { text-align: right; white-space: nowrap; }
+  .kacheln { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+  .kachel b { display: block; font-size: 22px; color: var(--accent); }
+  .hinweis { color: var(--warn); font-size: 14px; }
+  .leer { color: var(--muted); font-style: italic; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Produktions-Rechner</h1>
+  <p>Produkte auswählen, Menge eingeben – der Rechner zeigt, wie viele Vorgänge nötig sind, welche Zutaten gebraucht werden
+     und in welcher Reihenfolge hergestellt wird. Mengen gelten je Vorgang; ergibt ein Vorgang mehrere Stück, wird aufgerundet.</p>
+
+  <div class="karte">
+    <div class="reihe">
+      <select id="station" aria-label="Station"><option value="">Alle Stationen</option></select>
+      <input id="produkt" list="produkte" placeholder="Produkt suchen …" autocomplete="off" aria-label="Produkt">
+      <datalist id="produkte"></datalist>
+      <input id="menge" type="number" min="1" step="1" value="1" aria-label="Menge">
+      <button class="haupt" id="hinzu">Hinzufügen</button>
+    </div>
+    <p id="fehler" class="hinweis" hidden></p>
+    <ul class="auswahl" id="auswahl"></ul>
+    <div class="reihe" style="margin-top:12px; justify-content: space-between;">
+      <label class="schalter"><input type="checkbox" id="kette" checked> ganze Kette bis zu den Rohstoffen</label>
+      <button id="leeren">Auswahl leeren</button>
+    </div>
+  </div>
+
+  <div id="ergebnis"></div>
+
+  <footer>Rezepte aus dem Trasporto Sheet, Stand <span id="stand"></span>. · <a href="./">Startseite</a></footer>
+</main>
+<script src="rezepte.js"></script>
+<script>
+(function () {
+  const REZ = {};
+  window.REZEPTE.forEach(r => { REZ[r.name] = r; });
+  const herstellbar = r => r && r.zutaten.length > 0;
+  const el = id => document.getElementById(id);
+  const fmt = n => (Math.round(n * 100) / 100).toLocaleString('de-DE');
+  const geld = n => n.toLocaleString('de-DE') + ' $';
+  const zeit = s => {
+    s = Math.round(s);
+    const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), sek = s % 60;
+    return h ? `${h} h ${m} min` : m ? `${m} min ${sek} s` : `${sek} s`;
+  };
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const stationText = r => r.station === 'Labor' ? `Labor (Stufe ${r.laborstufe})` : r.station;
+
+  // Zustand: Auswahl [{name, menge}], vorhandene Zwischenprodukte {name: menge}
+  let auswahl = [], vorhanden = {};
+  try { const g = JSON.parse(localStorage.getItem('rechner') || '{}'); auswahl = g.auswahl || []; vorhanden = g.vorhanden || {}; } catch (e) {}
+  auswahl = auswahl.filter(a => herstellbar(REZ[a.name]));
+  const merken = () => { try { localStorage.setItem('rechner', JSON.stringify({ auswahl, vorhanden })); } catch (e) {} };
+
+  // Auswahlliste
+  const stationen = [...new Set(window.REZEPTE.filter(herstellbar).map(r => r.station))];
+  stationen.forEach(s => el('station').insertAdjacentHTML('beforeend', `<option>${esc(s)}</option>`));
+  function liste() {
+    const st = el('station').value;
+    el('produkte').innerHTML = window.REZEPTE.filter(r => herstellbar(r) && (!st || r.station === st))
+      .map(r => `<option value="${esc(r.name)}">${esc(stationText(r))}</option>`).join('');
+  }
+  el('station').addEventListener('change', liste);
+  liste();
+
+  function hinzufuegen() {
+    const name = el('produkt').value.trim();
+    const treffer = REZ[name] || window.REZEPTE.find(r => r.name.toLowerCase() === name.toLowerCase());
+    const menge = Math.floor(Number(el('menge').value));
+    el('fehler').hidden = true;
+    if (!herstellbar(treffer)) { el('fehler').textContent = 'Produkt nicht gefunden – bitte aus der Liste wählen.'; el('fehler').hidden = false; return; }
+    if (!(menge > 0)) { el('fehler').textContent = 'Menge muss mindestens 1 sein.'; el('fehler').hidden = false; return; }
+    const da = auswahl.find(a => a.name === treffer.name);
+    if (da) da.menge += menge; else auswahl.push({ name: treffer.name, menge });
+    el('produkt').value = ''; el('menge').value = 1; el('produkt').focus();
+    zeichnen();
+  }
+  el('hinzu').addEventListener('click', hinzufuegen);
+  [el('produkt'), el('menge')].forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') hinzufuegen(); }));
+  el('leeren').addEventListener('click', () => { auswahl = []; vorhanden = {}; zeichnen(); });
+  el('kette').addEventListener('change', () => zeichnen());
+
+  // Rechnung
+  function rechnen() {
+    const kette = el('kette').checked;
+    const ziele = new Set(auswahl.map(a => a.name));
+    const aufloesen = n => herstellbar(REZ[n]) && (kette || ziele.has(n));
+    // Reihenfolge: jedes Produkt vor seinen Zutaten (Tiefensuche, umgedreht)
+    const besucht = new Set(), folge = [];
+    const besuch = n => {
+      if (besucht.has(n) || !aufloesen(n)) return;
+      besucht.add(n);
+      REZ[n].zutaten.forEach(z => besuch(z.name));
+      folge.push(n);
+    };
+    auswahl.forEach(a => besuch(a.name));
+    folge.reverse();
+
+    const bedarf = {};
+    auswahl.forEach(a => { bedarf[a.name] = (bedarf[a.name] || 0) + a.menge; });
+    const schritte = [];
+    folge.forEach(n => {
+      const r = REZ[n], brutto = bedarf[n] || 0, habe = Math.min(vorhanden[n] || 0, brutto);
+      const netto = brutto - habe;
+      const vorgaenge = netto > 0 ? Math.ceil(netto / r.ertrag - 1e-9) : 0;
+      r.zutaten.forEach(z => { bedarf[z.name] = (bedarf[z.name] || 0) + vorgaenge * z.menge; });
+      schritte.push({ r, brutto, habe, vorgaenge, ergibt: vorgaenge * r.ertrag, rest: vorgaenge * r.ertrag - netto,
+                      zeit: vorgaenge * r.zeit, geld: vorgaenge * (r.geld || 0) });
+    });
+    const rohstoffe = Object.keys(bedarf).filter(n => !besucht.has(n) && bedarf[n] > 0).map(n => {
+      const r = REZ[n], menge = bedarf[n];
+      const sammeln = r && r.station === 'Sammeln' && r.zeit > 0 ? Math.ceil(menge / r.ertrag - 1e-9) * r.zeit : 0;
+      return { name: n, menge, art: r ? r.station : '', sammeln };
+    }).sort((a, b) => a.art.localeCompare(b.art) || a.name.localeCompare(b.name));
+    return { kette, schritte: schritte.reverse(), rohstoffe };
+  }
+
+  function zeichnen() {
+    merken();
+    el('auswahl').innerHTML = auswahl.map((a, i) => `<li><span>${esc(a.name)} <span class="muted">· ${esc(stationText(REZ[a.name]))}</span></span>
+      <input type="number" min="1" step="1" value="${a.menge}" data-i="${i}" aria-label="Menge ${esc(a.name)}">
+      <button class="klein" data-weg="${i}" aria-label="${esc(a.name)} entfernen">✕</button></li>`).join('')
+      || '<li class="leer">Noch nichts ausgewählt.</li>';
+    if (!auswahl.length) { el('ergebnis').innerHTML = ''; return; }
+
+    const { kette, schritte, rohstoffe } = rechnen();
+    const herstellzeit = schritte.reduce((s, x) => s + x.zeit, 0);
+    const sammelzeit = rohstoffe.reduce((s, x) => s + x.sammeln, 0);
+    const geldGesamt = schritte.reduce((s, x) => s + x.geld, 0);
+    const aktiv = schritte.filter(x => x.vorgaenge > 0);
+    const labor = aktiv.filter(x => x.r.station === 'Labor');
+    const laborstufe = labor.reduce((m, x) => Math.max(m, x.r.laborstufe), -1);
+    const stationenNoetig = [...new Set(aktiv.map(x => x.r.station))];
+    const voraus = [...new Set(aktiv.map(x => x.r.voraussetzung).filter(Boolean))];
+    if (rohstoffe.some(x => x.art === 'Sammeln' && REZ[x.name].voraussetzung)) voraus.push(...new Set(rohstoffe.filter(x => x.art === 'Sammeln' && REZ[x.name].voraussetzung).map(x => REZ[x.name].voraussetzung)));
+    if (labor.some(x => x.r.laborglas)) voraus.unshift('Laborglas');
+
+    let h = '<h2>Zusammenfassung</h2><div class="kacheln">';
+    h += `<div class="karte kachel">Herstellzeit<b>${zeit(herstellzeit)}</b></div>`;
+    h += `<div class="karte kachel">Vorgänge<b>${fmt(aktiv.reduce((s, x) => s + x.vorgaenge, 0))}</b></div>`;
+    if (sammelzeit) h += `<div class="karte kachel">Sammelzeit<b>${zeit(sammelzeit)}</b></div>`;
+    if (laborstufe >= 0) h += `<div class="karte kachel">Laborstufe mind.<b>${laborstufe}</b></div>`;
+    if (geldGesamt) h += `<div class="karte kachel">Geld beim Herstellen<b>${geld(geldGesamt)}</b></div>`;
+    h += '</div>';
+    h += `<p><strong>Stationen:</strong> ${stationenNoetig.map(esc).join(', ') || '—'}`;
+    if (voraus.length) h += `<br><strong>Man muss haben:</strong> ${[...new Set(voraus)].map(esc).join(', ')}`;
+    h += '</p>';
+
+    h += `<h2>${kette ? 'Rohstoffe' : 'Zutaten'}</h2>`;
+    h += '<div class="tabelle"><table><thead><tr><th>Gegenstand</th><th class="zahl">Menge</th><th>Herkunft</th>'
+      + (sammelzeit ? '<th class="zahl">Sammelzeit</th>' : '') + '</tr></thead><tbody>';
+    h += rohstoffe.map(x => `<tr><td>${esc(x.name)}</td><td class="zahl">${fmt(x.menge)}</td><td>${esc(
+      x.art === 'Sammeln' ? 'sammeln' : x.art === 'Shop' ? 'kaufen' : x.art ? stationText(REZ[x.name]) : '—')}</td>`
+      + (sammelzeit ? `<td class="zahl">${x.sammeln ? zeit(x.sammeln) : ''}</td>` : '') + '</tr>').join('')
+      || '<tr><td colspan="4" class="leer">Nichts nötig.</td></tr>';
+    h += '</tbody></table></div>';
+    if (rohstoffe.some(x => x.name === 'Weintrauben')) h += '<p class="muted">Weintrauben: 1–4 je Vorgang, gerechnet mit 2,5.</p>';
+
+    h += '<h2>Schritte</h2><p class="muted">Von oben nach unten herstellen. Unter „Habe schon“ vorhandene Menge eintragen, dann wird weniger hergestellt.</p>';
+    h += '<div class="tabelle"><table><thead><tr><th>Produkt</th><th>Station</th><th class="zahl">Vorgänge</th><th class="zahl">Ergibt</th>'
+      + '<th>Zutaten gesamt</th><th class="zahl">Zeit</th><th class="zahl">Habe schon</th></tr></thead><tbody>';
+    h += schritte.map(x => {
+      const r = x.r;
+      const zut = r.zutaten.map(z => `${fmt(z.menge * x.vorgaenge)} × ${esc(z.name)}`).join('<br>') + (r.geld ? `<br>${geld(r.geld * x.vorgaenge)}` : '');
+      const info = [r.station === 'Labor' && r.laborglas ? 'Laborglas' : '', r.voraussetzung || ''].filter(Boolean).join(', ');
+      return `<tr><td><strong>${esc(r.name)}</strong><br><span class="muted">je Vorgang: ${r.zutaten.map(z => `${fmt(z.menge)} ${esc(z.name)}`).join(' + ')}${r.geld ? ' + ' + geld(r.geld) : ''} → ${fmt(r.ertrag)} Stück, ${fmt(r.zeit)} s</span></td>`
+        + `<td>${esc(stationText(r))}${info ? `<br><span class="hinweis">${esc(info)}</span>` : ''}</td>`
+        + `<td class="zahl">${fmt(x.vorgaenge)}</td><td class="zahl">${fmt(x.ergibt)}${x.rest > 1e-9 ? `<br><span class="muted">+${fmt(x.rest)} übrig</span>` : ''}</td>`
+        + `<td>${x.vorgaenge ? zut : '—'}</td><td class="zahl">${zeit(x.zeit)}</td>`
+        + `<td class="zahl"><input type="number" min="0" step="1" value="${vorhanden[r.name] || ''}" placeholder="0" data-habe="${esc(r.name)}" aria-label="Habe schon ${esc(r.name)}"></td></tr>`;
+    }).join('');
+    h += '</tbody></table></div>';
+    h += '<p><button id="kopieren">Zusammenfassung kopieren</button> <span id="kopiert" class="muted"></span></p>';
+    el('ergebnis').innerHTML = h;
+
+    el('kopieren').addEventListener('click', () => {
+      const t = ['Produktion: ' + auswahl.map(a => `${a.menge}× ${a.name}`).join(', '),
+        `Herstellzeit ${zeit(herstellzeit)}` + (sammelzeit ? `, Sammelzeit ${zeit(sammelzeit)}` : '') + (laborstufe >= 0 ? `, Laborstufe ${laborstufe}` : ''),
+        (kette ? 'Rohstoffe: ' : 'Zutaten: ') + rohstoffe.map(x => `${fmt(x.menge)}× ${x.name}`).join(', '),
+        'Schritte: ' + schritte.filter(x => x.vorgaenge).map(x => `${x.r.name} ${x.vorgaenge}×`).join(' → ')].join('\n');
+      const ok = () => { el('kopiert').textContent = 'kopiert'; };
+      if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, () => prompt('Text kopieren:', t)); else prompt('Text kopieren:', t);
+    });
+  }
+
+  el('auswahl').addEventListener('change', e => {
+    const i = e.target.dataset.i;
+    if (i === undefined) return;
+    const m = Math.floor(Number(e.target.value));
+    if (m > 0) auswahl[i].menge = m;
+    zeichnen();
+  });
+  el('auswahl').addEventListener('click', e => {
+    if (e.target.dataset.weg === undefined) return;
+    auswahl.splice(Number(e.target.dataset.weg), 1);
+    zeichnen();
+  });
+  el('ergebnis').addEventListener('change', e => {
+    const n = e.target.dataset.habe;
+    if (n === undefined) return;
+    const m = Math.max(0, Math.floor(Number(e.target.value) || 0));
+    if (m) vorhanden[n] = m; else delete vorhanden[n];
+    zeichnen();
+  });
+
+  el('stand').textContent = window.REZEPTE_STAND;
+  zeichnen();
+})();
+</script>
+</body>
+</html>
