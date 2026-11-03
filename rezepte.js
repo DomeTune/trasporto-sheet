@@ -1,5 +1,5 @@
 // Erzeugt von trasporto/scripts/rechner_export.py – nicht von Hand ändern.
-window.REZEPTE_STAND = "02.11.2026 19:44";
+window.REZEPTE_STAND = "03.11.2026 01:39";
 window.REZEPTE = [
  {
   "name": "Dest. Wasser",
@@ -14,7 +14,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": false
+  "laborglas": false,
+  "skill": "chemie"
  },
  {
   "name": "Kochsalzlösung",
@@ -33,7 +34,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Ethanol",
@@ -52,7 +54,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Essigsäure",
@@ -71,7 +74,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Natron",
@@ -90,7 +94,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": false
+  "laborglas": false,
+  "skill": "chemie"
  },
  {
   "name": "Pufferlösung",
@@ -109,7 +114,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Ammoniak",
@@ -128,7 +134,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Aceton",
@@ -147,7 +154,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Salzsäure",
@@ -166,7 +174,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Methanol",
@@ -185,7 +194,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Chlorkalk",
@@ -204,7 +214,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Chloroform",
@@ -223,7 +234,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Ether",
@@ -242,7 +254,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Epinephrin",
@@ -261,7 +274,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Sulfanilamid",
@@ -280,7 +294,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Morphinbase",
@@ -299,7 +314,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Morphium",
@@ -318,7 +334,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Kodein",
@@ -337,7 +354,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Methylamin",
@@ -356,7 +374,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Tropinon",
@@ -375,7 +394,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Barbitursäure",
@@ -394,7 +414,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Kaliumcyanid",
@@ -413,7 +434,8 @@ window.REZEPTE = [
     "menge": 3.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Adrenalin",
@@ -432,7 +454,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Antibiotikum",
@@ -451,7 +474,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Kaliumiodid",
@@ -470,7 +494,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Schmerzmittel",
@@ -489,7 +514,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Methadon",
@@ -508,7 +534,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Naloxon",
@@ -527,7 +554,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Ketamin",
@@ -550,7 +578,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Scopolamin",
@@ -573,7 +602,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Thiopental",
@@ -596,7 +626,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Zyanidkapsel",
@@ -615,7 +646,8 @@ window.REZEPTE = [
     "menge": 2.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Joints (Grün)",
@@ -634,7 +666,8 @@ window.REZEPTE = [
     "menge": 1.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Joints (Blau)",
@@ -653,7 +686,8 @@ window.REZEPTE = [
     "menge": 2.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Joints (Lila)",
@@ -672,7 +706,8 @@ window.REZEPTE = [
     "menge": 3.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Joints (Gold)",
@@ -691,7 +726,8 @@ window.REZEPTE = [
     "menge": 4.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Kokain (Grün)",
@@ -710,7 +746,8 @@ window.REZEPTE = [
     "menge": 2.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Kokain (Blau)",
@@ -729,7 +766,8 @@ window.REZEPTE = [
     "menge": 3.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Kokain (Lila)",
@@ -748,7 +786,8 @@ window.REZEPTE = [
     "menge": 4.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Kokain (Gold)",
@@ -767,7 +806,8 @@ window.REZEPTE = [
     "menge": 5.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Meth (Grün)",
@@ -786,7 +826,8 @@ window.REZEPTE = [
     "menge": 2.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Meth (Blau)",
@@ -805,7 +846,8 @@ window.REZEPTE = [
     "menge": 3.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Meth (Lila)",
@@ -824,7 +866,8 @@ window.REZEPTE = [
     "menge": 4.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Meth (Gold)",
@@ -843,7 +886,8 @@ window.REZEPTE = [
     "menge": 5.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Opium (Grün)",
@@ -862,7 +906,8 @@ window.REZEPTE = [
     "menge": 3.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Opium (Blau)",
@@ -881,7 +926,8 @@ window.REZEPTE = [
     "menge": 4.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Opium (Lila)",
@@ -900,7 +946,8 @@ window.REZEPTE = [
     "menge": 5.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Opium (Gold)",
@@ -919,7 +966,8 @@ window.REZEPTE = [
     "menge": 6.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Bufotenin (Grün)",
@@ -938,7 +986,8 @@ window.REZEPTE = [
     "menge": 2.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Bufotenin (Blau)",
@@ -957,7 +1006,8 @@ window.REZEPTE = [
     "menge": 3.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Bufotenin (Lila)",
@@ -976,7 +1026,8 @@ window.REZEPTE = [
     "menge": 4.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Bufotenin (Gold)",
@@ -995,14 +1046,16 @@ window.REZEPTE = [
     "menge": 5.0
    }
   ],
-  "laborglas": true
+  "laborglas": true,
+  "skill": "chemie"
  },
  {
   "name": "Kevlarfasern",
   "station": "Sammeln",
   "ertrag": 1.0,
   "zeit": 2.2,
-  "zutaten": []
+  "zutaten": [],
+  "skill": "westen"
  },
  {
   "name": "Eisenerz",
@@ -1010,7 +1063,8 @@ window.REZEPTE = [
   "ertrag": 1.0,
   "zeit": 3.0,
   "zutaten": [],
-  "voraussetzung": "Spitzhacke"
+  "voraussetzung": "Spitzhacke",
+  "skill": "bergbau"
  },
  {
   "name": "Kupfererz",
@@ -1018,7 +1072,8 @@ window.REZEPTE = [
   "ertrag": 1.0,
   "zeit": 2.4,
   "zutaten": [],
-  "voraussetzung": "Spitzhacke"
+  "voraussetzung": "Spitzhacke",
+  "skill": "bergbau"
  },
  {
   "name": "Steinsalz",
@@ -1026,7 +1081,8 @@ window.REZEPTE = [
   "ertrag": 1.0,
   "zeit": 2.0,
   "zutaten": [],
-  "voraussetzung": "Spitzhacke"
+  "voraussetzung": "Spitzhacke",
+  "skill": "bergbau"
  },
  {
   "name": "Kalk",
@@ -1034,7 +1090,8 @@ window.REZEPTE = [
   "ertrag": 1.0,
   "zeit": 2.5,
   "zutaten": [],
-  "voraussetzung": "Spitzhacke"
+  "voraussetzung": "Spitzhacke",
+  "skill": "bergbau"
  },
  {
   "name": "Salmiak",
@@ -1042,7 +1099,8 @@ window.REZEPTE = [
   "ertrag": 1.0,
   "zeit": 3.5,
   "zutaten": [],
-  "voraussetzung": "Spitzhacke"
+  "voraussetzung": "Spitzhacke",
+  "skill": "bergbau"
  },
  {
   "name": "Jodsalz",
@@ -1050,7 +1108,8 @@ window.REZEPTE = [
   "ertrag": 1.0,
   "zeit": 5.0,
   "zutaten": [],
-  "voraussetzung": "Spitzhacke"
+  "voraussetzung": "Spitzhacke",
+  "skill": "bergbau"
  },
  {
   "name": "Uranerz",
@@ -1058,7 +1117,8 @@ window.REZEPTE = [
   "ertrag": 1.0,
   "zeit": 16.0,
   "zutaten": [],
-  "voraussetzung": "Spitzhacke"
+  "voraussetzung": "Spitzhacke",
+  "skill": "bergbau"
  },
  {
   "name": "Weintrauben",
@@ -1112,7 +1172,8 @@ window.REZEPTE = [
     "name": "Kevlarfasern",
     "menge": 8.0
    }
-  ]
+  ],
+  "skill": "westen"
  },
  {
   "name": "Westen",
@@ -1124,7 +1185,8 @@ window.REZEPTE = [
     "name": "Kevlarmaterial",
     "menge": 6.0
    }
-  ]
+  ],
+  "skill": "westen"
  },
  {
   "name": "Branntwein",
@@ -1220,7 +1282,8 @@ window.REZEPTE = [
     "name": "Eisenerz",
     "menge": 10.0
    }
-  ]
+  ],
+  "skill": "bergbau"
  },
  {
   "name": "Kupfer",
@@ -1232,7 +1295,8 @@ window.REZEPTE = [
     "name": "Kupfererz",
     "menge": 10.0
    }
-  ]
+  ],
+  "skill": "bergbau"
  },
  {
   "name": "Schwefelsäure",
@@ -1244,7 +1308,8 @@ window.REZEPTE = [
     "name": "Kupfererz",
     "menge": 5.0
    }
-  ]
+  ],
+  "skill": "bergbau"
  },
  {
   "name": "Uran",
@@ -1283,55 +1348,59 @@ window.REZEPTE = [
   "name": "Metallplatten",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 5.0,
+  "zeit": 2.5,
   "zutaten": [
    {
     "name": "Metall",
     "menge": 2.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Verstärkte Platten",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 15.0,
+  "zeit": 7.5,
   "zutaten": [
    {
     "name": "Metallplatten",
     "menge": 6.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Titanplatten",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 30.0,
+  "zeit": 15.0,
   "zutaten": [
    {
     "name": "Verstärkte Platten",
     "menge": 4.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Kupferkabel",
   "station": "Werkbank",
   "ertrag": 2.0,
-  "zeit": 4.0,
+  "zeit": 2.0,
   "zutaten": [
    {
     "name": "Kupfer",
     "menge": 1.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Elektroteile",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 10.0,
+  "zeit": 5.0,
   "zutaten": [
    {
     "name": "Kupferkabel",
@@ -1341,13 +1410,14 @@ window.REZEPTE = [
     "name": "Metall",
     "menge": 1.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Laborbrenner",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 30.0,
+  "zeit": 15.0,
   "zutaten": [
    {
     "name": "Verstärkte Platten",
@@ -1357,52 +1427,56 @@ window.REZEPTE = [
     "name": "Elektroteile",
     "menge": 3.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Lager T1",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 30.0,
+  "zeit": 15.0,
   "zutaten": [
    {
     "name": "Metallplatten",
     "menge": 4.0
    }
   ],
-  "geld": 20000.0
+  "geld": 20000.0,
+  "skill": "handwerk"
  },
  {
   "name": "Lager T2",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 45.0,
+  "zeit": 22.5,
   "zutaten": [
    {
     "name": "Verstärkte Platten",
     "menge": 1.0
    }
   ],
-  "geld": 40000.0
+  "geld": 40000.0,
+  "skill": "handwerk"
  },
  {
   "name": "Lager T3",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 60.0,
+  "zeit": 30.0,
   "zutaten": [
    {
     "name": "Titanplatten",
     "menge": 1.0
    }
   ],
-  "geld": 25000.0
+  "geld": 25000.0,
+  "skill": "handwerk"
  },
  {
   "name": "Lager T4",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 75.0,
+  "zeit": 37.5,
   "zutaten": [
    {
     "name": "Titanplatten",
@@ -1410,37 +1484,40 @@ window.REZEPTE = [
    }
   ],
   "geld": 40000.0,
-  "voraussetzung": "VIP 1"
+  "voraussetzung": "VIP 1",
+  "skill": "handwerk"
  },
  {
   "name": "Mobile Werkbank",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 45.0,
+  "zeit": 22.5,
   "zutaten": [
    {
     "name": "Verstärkte Platten",
     "menge": 3.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Mobiler Herd",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 45.0,
+  "zeit": 22.5,
   "zutaten": [
    {
     "name": "Verstärkte Platten",
     "menge": 3.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Mobiles Labor",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 60.0,
+  "zeit": 30.0,
   "zutaten": [
    {
     "name": "Verstärkte Platten",
@@ -1450,7 +1527,8 @@ window.REZEPTE = [
     "name": "Elektroteile",
     "menge": 8.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Küche-Upgrade 1",
@@ -1552,7 +1630,7 @@ window.REZEPTE = [
   "name": "Laborglas",
   "station": "Werkbank",
   "ertrag": 5.0,
-  "zeit": 10.0,
+  "zeit": 5.0,
   "zutaten": [
    {
     "name": "Natron",
@@ -1562,13 +1640,14 @@ window.REZEPTE = [
     "name": "Kalk",
     "menge": 1.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Handy-Jailbreak",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 20.0,
+  "zeit": 10.0,
   "zutaten": [
    {
     "name": "Handy",
@@ -1578,13 +1657,14 @@ window.REZEPTE = [
     "name": "Elektroteile",
     "menge": 4.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Kabelbinder",
   "station": "Werkbank",
   "ertrag": 3.0,
-  "zeit": 10.0,
+  "zeit": 5.0,
   "zutaten": [
    {
     "name": "Kevlarmaterial",
@@ -1594,13 +1674,14 @@ window.REZEPTE = [
     "name": "Kupferkabel",
     "menge": 2.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Fußfesseln",
   "station": "Werkbank",
   "ertrag": 3.0,
-  "zeit": 10.0,
+  "zeit": 5.0,
   "zutaten": [
    {
     "name": "Kevlarmaterial",
@@ -1610,13 +1691,14 @@ window.REZEPTE = [
     "name": "Kupferkabel",
     "menge": 4.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Dietrich",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 10.0,
+  "zeit": 5.0,
   "zutaten": [
    {
     "name": "Metall",
@@ -1626,13 +1708,14 @@ window.REZEPTE = [
     "name": "Kupferkabel",
     "menge": 4.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Dietrich Mk II",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 30.0,
+  "zeit": 15.0,
   "zutaten": [
    {
     "name": "Dietrich",
@@ -1642,13 +1725,14 @@ window.REZEPTE = [
     "name": "Verstärkte Platten",
     "menge": 1.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Racing-Tablet",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 8.0,
+  "zeit": 4.0,
   "zutaten": [
    {
     "name": "Kupferkabel",
@@ -1658,13 +1742,14 @@ window.REZEPTE = [
     "name": "Metall",
     "menge": 1.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "GPS",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 10.0,
+  "zeit": 5.0,
   "zutaten": [
    {
     "name": "Elektroteile",
@@ -1674,13 +1759,14 @@ window.REZEPTE = [
     "name": "Kupferkabel",
     "menge": 2.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Erw. Med Kit",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 20.0,
+  "zeit": 10.0,
   "zutaten": [
    {
     "name": "Medkit",
@@ -1690,25 +1776,27 @@ window.REZEPTE = [
     "name": "Kevlarmaterial",
     "menge": 8.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Strahlenschutzanzug",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 30.0,
+  "zeit": 15.0,
   "zutaten": [
    {
     "name": "Verstärkte Platten",
     "menge": 3.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Bohrer",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 20.0,
+  "zeit": 10.0,
   "zutaten": [
    {
     "name": "Metall",
@@ -1718,13 +1806,14 @@ window.REZEPTE = [
     "name": "Elektroteile",
     "menge": 1.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Thermit",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 30.0,
+  "zeit": 15.0,
   "zutaten": [
    {
     "name": "Schwefelsäure",
@@ -1742,38 +1831,41 @@ window.REZEPTE = [
     "name": "Metall",
     "menge": 2.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Kennzeichen",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 20.0,
+  "zeit": 10.0,
   "zutaten": [
    {
     "name": "Verstärkte Platten",
     "menge": 1.0
    }
-  ]
+  ],
+  "skill": "handwerk"
  },
  {
   "name": "Gepanzerte Reifen",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 30.0,
+  "zeit": 15.0,
   "zutaten": [
    {
     "name": "Kevlarmaterial",
     "menge": 20.0
    }
   ],
-  "geld": 10000.0
+  "geld": 10000.0,
+  "skill": "handwerk"
  },
  {
   "name": "Mags - Pistole",
   "station": "Werkbank",
   "ertrag": 10.0,
-  "zeit": 4.0,
+  "zeit": 2.0,
   "zutaten": [
    {
     "name": "Kupfer",
@@ -1784,13 +1876,14 @@ window.REZEPTE = [
     "menge": 4.0
    }
   ],
-  "voraussetzung": "Visum 6"
+  "voraussetzung": "Visum 6",
+  "skill": "handwerk"
  },
  {
   "name": "Mags - Revolver",
   "station": "Werkbank",
   "ertrag": 14.0,
-  "zeit": 5.0,
+  "zeit": 2.5,
   "zutaten": [
    {
     "name": "Kupfer",
@@ -1801,13 +1894,14 @@ window.REZEPTE = [
     "menge": 8.0
    }
   ],
-  "voraussetzung": "Visum 6"
+  "voraussetzung": "Visum 6",
+  "skill": "handwerk"
  },
  {
   "name": "Mags - SMG",
   "station": "Werkbank",
   "ertrag": 10.0,
-  "zeit": 5.0,
+  "zeit": 2.5,
   "zutaten": [
    {
     "name": "Kupfer",
@@ -1818,13 +1912,14 @@ window.REZEPTE = [
     "menge": 12.0
    }
   ],
-  "voraussetzung": "Visum 6"
+  "voraussetzung": "Visum 6",
+  "skill": "handwerk"
  },
  {
   "name": "Mags - Gewehr",
   "station": "Werkbank",
   "ertrag": 10.0,
-  "zeit": 5.0,
+  "zeit": 2.5,
   "zutaten": [
    {
     "name": "Kupfer",
@@ -1835,13 +1930,14 @@ window.REZEPTE = [
     "menge": 16.0
    }
   ],
-  "voraussetzung": "Visum 6"
+  "voraussetzung": "Visum 6",
+  "skill": "handwerk"
  },
  {
   "name": "Mags - Schrot",
   "station": "Werkbank",
   "ertrag": 4.0,
-  "zeit": 5.0,
+  "zeit": 2.5,
   "zutaten": [
    {
     "name": "Kupfer",
@@ -1852,13 +1948,14 @@ window.REZEPTE = [
     "menge": 10.0
    }
   ],
-  "voraussetzung": "Visum 6"
+  "voraussetzung": "Visum 6",
+  "skill": "handwerk"
  },
  {
   "name": "Mags - Sniper",
   "station": "Werkbank",
   "ertrag": 2.0,
-  "zeit": 6.0,
+  "zeit": 3.0,
   "zutaten": [
    {
     "name": "Kupfer",
@@ -1869,13 +1966,14 @@ window.REZEPTE = [
     "menge": 6.0
    }
   ],
-  "voraussetzung": "Visum 6"
+  "voraussetzung": "Visum 6",
+  "skill": "handwerk"
  },
  {
   "name": "Mags - MG",
   "station": "Werkbank",
   "ertrag": 1.0,
-  "zeit": 6.0,
+  "zeit": 3.0,
   "zutaten": [
    {
     "name": "Kupfer",
@@ -1886,13 +1984,14 @@ window.REZEPTE = [
     "menge": 8.0
    }
   ],
-  "voraussetzung": "Visum 6"
+  "voraussetzung": "Visum 6",
+  "skill": "handwerk"
  },
  {
   "name": "SNS Pistole MK2",
   "station": "MK2-Fabrik",
   "ertrag": 1.0,
-  "zeit": 15.0,
+  "zeit": 7.5,
   "zutaten": [
    {
     "name": "Verstärkte Platten",
@@ -1903,13 +2002,14 @@ window.REZEPTE = [
     "menge": 70.0
    }
   ],
-  "voraussetzung": "MK2-Waffenfabrik"
+  "voraussetzung": "MK2-Waffenfabrik",
+  "skill": "handwerk"
  },
  {
   "name": "Pistole MK2",
   "station": "MK2-Fabrik",
   "ertrag": 1.0,
-  "zeit": 15.0,
+  "zeit": 7.5,
   "zutaten": [
    {
     "name": "Verstärkte Platten",
@@ -1920,13 +2020,14 @@ window.REZEPTE = [
     "menge": 76.0
    }
   ],
-  "voraussetzung": "MK2-Waffenfabrik"
+  "voraussetzung": "MK2-Waffenfabrik",
+  "skill": "handwerk"
  },
  {
   "name": "Schwerer Revolver MK2",
   "station": "MK2-Fabrik",
   "ertrag": 1.0,
-  "zeit": 20.0,
+  "zeit": 10.0,
   "zutaten": [
    {
     "name": "Titanplatten",
@@ -1937,13 +2038,14 @@ window.REZEPTE = [
     "menge": 280.0
    }
   ],
-  "voraussetzung": "MK2-Waffenfabrik"
+  "voraussetzung": "MK2-Waffenfabrik",
+  "skill": "handwerk"
  },
  {
   "name": "SMG MK2",
   "station": "MK2-Fabrik",
   "ertrag": 1.0,
-  "zeit": 20.0,
+  "zeit": 10.0,
   "zutaten": [
    {
     "name": "Titanplatten",
@@ -1954,13 +2056,14 @@ window.REZEPTE = [
     "menge": 330.0
    }
   ],
-  "voraussetzung": "MK2-Waffenfabrik"
+  "voraussetzung": "MK2-Waffenfabrik",
+  "skill": "handwerk"
  },
  {
   "name": "Bullpup-Gewehr MK2",
   "station": "MK2-Fabrik",
   "ertrag": 1.0,
-  "zeit": 25.0,
+  "zeit": 12.5,
   "zutaten": [
    {
     "name": "Titanplatten",
@@ -1971,13 +2074,14 @@ window.REZEPTE = [
     "menge": 590.0
    }
   ],
-  "voraussetzung": "MK2-Waffenfabrik"
+  "voraussetzung": "MK2-Waffenfabrik",
+  "skill": "handwerk"
  },
  {
   "name": "Sturmgewehr MK2",
   "station": "MK2-Fabrik",
   "ertrag": 1.0,
-  "zeit": 25.0,
+  "zeit": 12.5,
   "zutaten": [
    {
     "name": "Titanplatten",
@@ -1988,13 +2092,14 @@ window.REZEPTE = [
     "menge": 480.0
    }
   ],
-  "voraussetzung": "MK2-Waffenfabrik"
+  "voraussetzung": "MK2-Waffenfabrik",
+  "skill": "handwerk"
  },
  {
   "name": "Karabiner MK2",
   "station": "MK2-Fabrik",
   "ertrag": 1.0,
-  "zeit": 25.0,
+  "zeit": 12.5,
   "zutaten": [
    {
     "name": "Titanplatten",
@@ -2005,13 +2110,14 @@ window.REZEPTE = [
     "menge": 530.0
    }
   ],
-  "voraussetzung": "MK2-Waffenfabrik"
+  "voraussetzung": "MK2-Waffenfabrik",
+  "skill": "handwerk"
  },
  {
   "name": "Spezialkarabiner MK2",
   "station": "MK2-Fabrik",
   "ertrag": 1.0,
-  "zeit": 25.0,
+  "zeit": 12.5,
   "zutaten": [
    {
     "name": "Titanplatten",
@@ -2022,13 +2128,14 @@ window.REZEPTE = [
     "menge": 700.0
    }
   ],
-  "voraussetzung": "MK2-Waffenfabrik"
+  "voraussetzung": "MK2-Waffenfabrik",
+  "skill": "handwerk"
  },
  {
   "name": "Pump-Schrotflinte MK2",
   "station": "MK2-Fabrik",
   "ertrag": 1.0,
-  "zeit": 25.0,
+  "zeit": 12.5,
   "zutaten": [
    {
     "name": "Titanplatten",
@@ -2039,13 +2146,14 @@ window.REZEPTE = [
     "menge": 410.0
    }
   ],
-  "voraussetzung": "MK2-Waffenfabrik"
+  "voraussetzung": "MK2-Waffenfabrik",
+  "skill": "handwerk"
  },
  {
   "name": "Präzisionsgewehr MK2",
   "station": "MK2-Fabrik",
   "ertrag": 1.0,
-  "zeit": 30.0,
+  "zeit": 15.0,
   "zutaten": [
    {
     "name": "Titanplatten",
@@ -2056,13 +2164,14 @@ window.REZEPTE = [
     "menge": 830.0
    }
   ],
-  "voraussetzung": "MK2-Waffenfabrik"
+  "voraussetzung": "MK2-Waffenfabrik",
+  "skill": "handwerk"
  },
  {
   "name": "Schweres Scharfschützengewehr MK2",
   "station": "MK2-Fabrik",
   "ertrag": 1.0,
-  "zeit": 30.0,
+  "zeit": 15.0,
   "zutaten": [
    {
     "name": "Titanplatten",
@@ -2073,13 +2182,14 @@ window.REZEPTE = [
     "menge": 1060.0
    }
   ],
-  "voraussetzung": "MK2-Waffenfabrik"
+  "voraussetzung": "MK2-Waffenfabrik",
+  "skill": "handwerk"
  },
  {
   "name": "Kampf-MG MK2",
   "station": "MK2-Fabrik",
   "ertrag": 1.0,
-  "zeit": 40.0,
+  "zeit": 20.0,
   "zutaten": [
    {
     "name": "Titanplatten",
@@ -2090,6 +2200,7 @@ window.REZEPTE = [
     "menge": 1180.0
    }
   ],
-  "voraussetzung": "MK2-Waffenfabrik"
+  "voraussetzung": "MK2-Waffenfabrik",
+  "skill": "handwerk"
  }
 ];
