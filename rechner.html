@@ -36,6 +36,10 @@
   .kachel b { display: block; font-size: 22px; color: var(--accent); }
   .hinweis { color: var(--warn); font-size: 14px; }
   .leer { color: var(--muted); font-style: italic; }
+  summary { cursor: pointer; }
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px 16px; margin-top: 12px; }
+  .skills label:not(.schalter) { display: grid; gap: 4px; font-size: 15px; }
+  .skills input[type=number] { width: 100%; }
 </style>
 </head>
 <body>
@@ -60,6 +64,26 @@
     </div>
   </div>
 
+  <details class="karte" id="skillbox" style="margin-top:12px" open>
+    <summary><strong>Deine Skills</strong> <span class="muted" id="skillkurz"></span></summary>
+    <div class="skills">
+      <label>Chemie <span class="muted">(Labor, bis −30 %)</span><input type="number" min="0" max="30" step="1" data-skill="chemie"></label>
+      <label>Handwerk <span class="muted">(Werkbank, bis −25 %)</span><input type="number" min="0" max="30" step="1" data-skill="handwerk"></label>
+      <label>Bergbau <span class="muted">(Abbau, Schmelze, bis −20 %)</span><input type="number" min="0" max="30" step="1" data-skill="bergbau"></label>
+      <label>Westen <span class="muted">(Kevlar, Westen, bis −25 %)</span><input type="number" min="0" max="30" step="1" data-skill="westen"></label>
+      <label>Labor
+        <select id="laborort">
+          <option value="1">Öffentliches Labor</option>
+          <option value="1w">Wohnung ohne Upgrade</option>
+          <option value="0.9">Wohnung Upgrade 1 (−10 %)</option>
+          <option value="0.8">Wohnung Upgrade 2 (−20 %)</option>
+          <option value="0.7">Wohnung Upgrade 3 (−30 %)</option>
+          <option value="0.8m">Mobiles Labor (−20 %)</option>
+        </select></label>
+      <label class="schalter"><input type="checkbox" id="mobilwb"> Mobile Werkbank <span class="muted">(70 % Tempo, feste Werkbank 100 %)</span></label>
+    </div>
+  </details>
+
   <div id="ergebnis"></div>
 
   <footer>Rezepte aus dem Trasporto Sheet, Stand <span id="stand"></span>. · <a href="./">Startseite</a></footer>
@@ -79,13 +103,43 @@
     return h ? `${h} h ${m} min` : m ? `${m} min ${sek} s` : `${sek} s`;
   };
   const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const stationText = r => r.station === 'Labor' ? `Labor (Stufe ${r.laborstufe})` : r.station;
+  const stationText = r => r.station === 'Labor' ? `Labor (Chemie ${r.laborstufe})` : r.station;
 
-  // Zustand: Auswahl [{name, menge}], vorhandene Zwischenprodukte {name: menge}
-  let auswahl = [], vorhanden = {};
-  try { const g = JSON.parse(localStorage.getItem('rechner') || '{}'); auswahl = g.auswahl || []; vorhanden = g.vorhanden || {}; } catch (e) {}
+  // Skills wie modernv_levelsys: Zeit × (1 − Level/30 × Bonus). Labor-Ort und mobile Werkbank (Config.PropSpeed 0,7) kommen dazu.
+  const BONUS = { chemie: 0.3, handwerk: 0.25, bergbau: 0.2, westen: 0.25 };
+  const SKILLNAME = { chemie: 'Chemie', handwerk: 'Handwerk', bergbau: 'Bergbau', westen: 'Westen' };
+
+  // Zustand: Auswahl [{name, menge}], vorhandene Zwischenprodukte {name: menge}, Skills
+  let auswahl = [], vorhanden = {}, skills = { chemie: 0, handwerk: 0, bergbau: 0, westen: 0, laborort: '1', mobilwb: false };
+  try {
+    const g = JSON.parse(localStorage.getItem('rechner') || '{}');
+    auswahl = g.auswahl || []; vorhanden = g.vorhanden || {}; Object.assign(skills, g.skills || {});
+  } catch (e) {}
   auswahl = auswahl.filter(a => herstellbar(REZ[a.name]));
-  const merken = () => { try { localStorage.setItem('rechner', JSON.stringify({ auswahl, vorhanden })); } catch (e) {} };
+  const merken = () => { try { localStorage.setItem('rechner', JSON.stringify({ auswahl, vorhanden, skills })); } catch (e) {} };
+
+  // Zeitfaktor eines Rezepts; ohneSkill rechnet mit Level 0 am selben Ort
+  function faktor(r, ohneSkill) {
+    let f = 1;
+    if (r.skill && !ohneSkill) f *= 1 - Math.min(30, skills[r.skill] || 0) / 30 * BONUS[r.skill];
+    if (r.station === 'Labor') f *= parseFloat(skills.laborort);
+    if (r.station === 'Werkbank' && skills.mobilwb) f /= 0.7;
+    return f;
+  }
+
+  document.querySelectorAll('[data-skill]').forEach(i => {
+    i.value = skills[i.dataset.skill] || '';
+    i.placeholder = '0';
+    i.addEventListener('change', () => {
+      skills[i.dataset.skill] = Math.max(0, Math.min(30, Math.floor(Number(i.value) || 0)));
+      i.value = skills[i.dataset.skill] || '';
+      zeichnen();
+    });
+  });
+  el('laborort').value = skills.laborort;
+  el('laborort').addEventListener('change', () => { skills.laborort = el('laborort').value; zeichnen(); });
+  el('mobilwb').checked = !!skills.mobilwb;
+  el('mobilwb').addEventListener('change', () => { skills.mobilwb = el('mobilwb').checked; zeichnen(); });
 
   // Auswahlliste
   const stationen = [...new Set(window.REZEPTE.filter(herstellbar).map(r => r.station))];
@@ -140,18 +194,20 @@
       const vorgaenge = netto > 0 ? Math.ceil(netto / r.ertrag - 1e-9) : 0;
       r.zutaten.forEach(z => { bedarf[z.name] = (bedarf[z.name] || 0) + vorgaenge * z.menge; });
       schritte.push({ r, brutto, habe, vorgaenge, ergibt: vorgaenge * r.ertrag, rest: vorgaenge * r.ertrag - netto,
-                      zeit: vorgaenge * r.zeit, geld: vorgaenge * (r.geld || 0) });
+                      zeit: vorgaenge * r.zeit * faktor(r), zeit0: vorgaenge * r.zeit * faktor(r, true), geld: vorgaenge * (r.geld || 0) });
     });
     const rohstoffe = Object.keys(bedarf).filter(n => !besucht.has(n) && bedarf[n] > 0).map(n => {
       const r = REZ[n], menge = bedarf[n];
-      const sammeln = r && r.station === 'Sammeln' && r.zeit > 0 ? Math.ceil(menge / r.ertrag - 1e-9) * r.zeit : 0;
-      return { name: n, menge, art: r ? r.station : '', sammeln };
+      const runden = r && r.station === 'Sammeln' && r.zeit > 0 ? Math.ceil(menge / r.ertrag - 1e-9) * r.zeit : 0;
+      return { name: n, menge, art: r ? r.station : '', sammeln: runden && runden * faktor(r), sammeln0: runden && runden * faktor(r, true) };
     }).sort((a, b) => a.art.localeCompare(b.art) || a.name.localeCompare(b.name));
     return { kette, schritte: schritte.reverse(), rohstoffe };
   }
 
   function zeichnen() {
     merken();
+    el('skillkurz').textContent = '· ' + Object.keys(BONUS).map(k => `${SKILLNAME[k]} ${skills[k] || 0}`).join(', ')
+      + ` · ${el('laborort').selectedOptions[0].text} · ${skills.mobilwb ? 'mobile' : 'feste'} Werkbank`;
     el('auswahl').innerHTML = auswahl.map((a, i) => `<li><span>${esc(a.name)} <span class="muted">· ${esc(stationText(REZ[a.name]))}</span></span>
       <input type="number" min="1" step="1" value="${a.menge}" data-i="${i}" aria-label="Menge ${esc(a.name)}">
       <button class="klein" data-weg="${i}" aria-label="${esc(a.name)} entfernen">✕</button></li>`).join('')
@@ -160,7 +216,10 @@
 
     const { kette, schritte, rohstoffe } = rechnen();
     const herstellzeit = schritte.reduce((s, x) => s + x.zeit, 0);
+    const herstellzeit0 = schritte.reduce((s, x) => s + x.zeit0, 0);
     const sammelzeit = rohstoffe.reduce((s, x) => s + x.sammeln, 0);
+    const sammelzeit0 = rohstoffe.reduce((s, x) => s + x.sammeln0, 0);
+    const ohne = (t, t0) => t0 - t > 0.5 ? `<span class="muted" style="display:block;font-size:13px">ohne Skills ${zeit(t0)}</span>` : '';
     const geldGesamt = schritte.reduce((s, x) => s + x.geld, 0);
     const aktiv = schritte.filter(x => x.vorgaenge > 0);
     const labor = aktiv.filter(x => x.r.station === 'Labor');
@@ -171,10 +230,10 @@
     if (labor.some(x => x.r.laborglas)) voraus.unshift('Laborglas');
 
     let h = '<h2>Zusammenfassung</h2><div class="kacheln">';
-    h += `<div class="karte kachel">Herstellzeit<b>${zeit(herstellzeit)}</b></div>`;
+    h += `<div class="karte kachel">Herstellzeit<b>${zeit(herstellzeit)}</b>${ohne(herstellzeit, herstellzeit0)}</div>`;
     h += `<div class="karte kachel">Vorgänge<b>${fmt(aktiv.reduce((s, x) => s + x.vorgaenge, 0))}</b></div>`;
-    if (sammelzeit) h += `<div class="karte kachel">Sammelzeit<b>${zeit(sammelzeit)}</b></div>`;
-    if (laborstufe >= 0) h += `<div class="karte kachel">Laborstufe mind.<b>${laborstufe}</b></div>`;
+    if (sammelzeit) h += `<div class="karte kachel">Sammelzeit<b>${zeit(sammelzeit)}</b>${ohne(sammelzeit, sammelzeit0)}</div>`;
+    if (laborstufe >= 0) h += `<div class="karte kachel">Chemie mind.<b>${laborstufe}</b>${laborstufe > (skills.chemie || 0) ? `<span class="hinweis" style="display:block;font-size:13px">du hast ${skills.chemie || 0}</span>` : ''}</div>`;
     if (geldGesamt) h += `<div class="karte kachel">Geld beim Herstellen<b>${geld(geldGesamt)}</b></div>`;
     h += '</div>';
     h += `<p><strong>Stationen:</strong> ${stationenNoetig.map(esc).join(', ') || '—'}`;
@@ -197,8 +256,10 @@
     h += schritte.map(x => {
       const r = x.r;
       const zut = r.zutaten.map(z => `${fmt(z.menge * x.vorgaenge)} × ${esc(z.name)}`).join('<br>') + (r.geld ? `<br>${geld(r.geld * x.vorgaenge)}` : '');
-      const info = [r.station === 'Labor' && r.laborglas ? 'Laborglas' : '', r.voraussetzung || ''].filter(Boolean).join(', ');
-      return `<tr><td><strong>${esc(r.name)}</strong><br><span class="muted">je Vorgang: ${r.zutaten.map(z => `${fmt(z.menge)} ${esc(z.name)}`).join(' + ')}${r.geld ? ' + ' + geld(r.geld) : ''} → ${fmt(r.ertrag)} Stück, ${fmt(r.zeit)} s</span></td>`
+      const info = [r.station === 'Labor' && r.laborglas ? 'Laborglas' : '', r.voraussetzung || '',
+        r.station === 'Labor' && r.laborstufe > (skills.chemie || 0) ? `Chemie ${r.laborstufe} nötig` : '',
+        /\(Gold\)$/.test(r.name) ? 'nur im eigenen Wohnungslabor' : ''].filter(Boolean).join(', ');
+      return `<tr><td><strong>${esc(r.name)}</strong><br><span class="muted">je Vorgang: ${r.zutaten.map(z => `${fmt(z.menge)} ${esc(z.name)}`).join(' + ')}${r.geld ? ' + ' + geld(r.geld) : ''} → ${fmt(r.ertrag)} Stück, ${fmt(r.zeit * faktor(r))} s</span></td>`
         + `<td>${esc(stationText(r))}${info ? `<br><span class="hinweis">${esc(info)}</span>` : ''}</td>`
         + `<td class="zahl">${fmt(x.vorgaenge)}</td><td class="zahl">${fmt(x.ergibt)}${x.rest > 1e-9 ? `<br><span class="muted">+${fmt(x.rest)} übrig</span>` : ''}</td>`
         + `<td>${x.vorgaenge ? zut : '—'}</td><td class="zahl">${zeit(x.zeit)}</td>`
@@ -210,7 +271,8 @@
 
     el('kopieren').addEventListener('click', () => {
       const t = ['Produktion: ' + auswahl.map(a => `${a.menge}× ${a.name}`).join(', '),
-        `Herstellzeit ${zeit(herstellzeit)}` + (sammelzeit ? `, Sammelzeit ${zeit(sammelzeit)}` : '') + (laborstufe >= 0 ? `, Laborstufe ${laborstufe}` : ''),
+        `Herstellzeit ${zeit(herstellzeit)}` + (sammelzeit ? `, Sammelzeit ${zeit(sammelzeit)}` : '') + (laborstufe >= 0 ? `, Chemie mind. ${laborstufe}` : ''),
+        'Skills: ' + el('skillkurz').textContent.replace(/^· /, ''),
         (kette ? 'Rohstoffe: ' : 'Zutaten: ') + rohstoffe.map(x => `${fmt(x.menge)}× ${x.name}`).join(', '),
         'Schritte: ' + schritte.filter(x => x.vorgaenge).map(x => `${x.r.name} ${x.vorgaenge}×`).join(' → ')].join('\n');
       const ok = () => { el('kopiert').textContent = 'kopiert'; };
